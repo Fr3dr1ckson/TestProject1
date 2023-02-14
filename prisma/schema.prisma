@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TestTable {
+  Id       Int       @id
+  name     String?   @db.VarChar(20)
+  birthDay DateTime? @db.Date
+}
+
+model User {
+  Id          String    @id @unique
+  FirstName   String
+  LastName    String
+  position    Position  @default(None)
+  FathersName String?
+  birthDay    DateTime? @db.Date
+
+  @@map("User")
+}
+
+enum Position {
+  None
+  Junior
+  Middle
+  Senior
+}
+
+model ResponseData {
+  id    String @id @unique
+  value String @unique
+}
+
+model PositionUrl {
+  position Position
+  url      String   @unique
+}
